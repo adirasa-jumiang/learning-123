@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>R.A. Adirasa</title>
+  <style>
+    body {
+      margin: 0;
+      /*font-family: sans-serif;*/
+      font-family: 'Arial', sans-serif;
+      background-color: #f9f9f9;
+      text-align: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    .wrapper {
+      display: flex;
+      transition: transform 0.3s ease;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      height: 100vh;
+      background-color: #333;
+      color: white;
+      padding: 1em;
+      position: fixed;
+      top: 0;
+      left: -280px;
+      z-index: 1000;
+      transition: left 0.3s ease;
+      text-align: left;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .sidebar h2 {
+      color: #fff;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #ccc;
+      padding: 10px 0;
+      text-decoration: none;
+    }
+
+    .sidebar a:hover {
+      color: #fff;
+    }
+
+    /* Overlay (untuk HP) */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 999;
+      display: none;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    .menu-btn {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 1100;
+      background: #fff;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+/* css abc */
+h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    #display {
+      font-size: 32px;
+      margin: 20px;
+      min-height: 40px;
+      background: #fff;
+      padding: 10px;
+      border: 2px solid #007BFF;
+      border-radius: 8px;
+    }
+    .btn-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 300px;
+      margin: auto;
+    }
+    .btn {
+      width: 60px;
+      height: 60px;
+      margin: 5px;
+      font-size: 24px;
+      border: none;
+      border-radius: 10px;
+      background-color: #007BFF;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+    .controls {
+      margin-top: 15px;
+    }
+    .controls .btn {
+      width: auto;
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #28a745;
+    }
+    .controls .btn.reset {
+      background-color: #dc3545;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="menu-btn" onclick="toggleSidebar()">☰</div>
+
+  <div class="sidebar" id="sidebar">
+    <br><h2>Menu</h2>
+    <a href="index.html">Beranda</a>
+    <a href="https://ra-adirasa.blogspot.com/">R.A. Adirasa</a>
+    <a href="help.html">Cara Pakai</a>
+    <a href="about.html">Tentang Aplikasi</a>
+  </div>
+
+  <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+  <h1>Pelafalan Angka (0–999)</h1>
+  <div id="display"></div>
+
+  <div class="btn-container">
+    <button class="btn" onclick="tambahAngka('1')">1</button>
+    <button class="btn" onclick="tambahAngka('2')">2</button>
+    <button class="btn" onclick="tambahAngka('3')">3</button>
+    <button class="btn" onclick="tambahAngka('4')">4</button>
+    <button class="btn" onclick="tambahAngka('5')">5</button>
+    <button class="btn" onclick="tambahAngka('6')">6</button>
+    <button class="btn" onclick="tambahAngka('7')">7</button>
+    <button class="btn" onclick="tambahAngka('8')">8</button>
+    <button class="btn" onclick="tambahAngka('9')">9</button>
+    <button class="btn" onclick="tambahAngka('0')">0</button>
+  </div>
+
+  <div class="controls">
+    <button class="btn" onclick="hapusAngka()">Hapus</button>
+    <button class="btn reset" onclick="resetAngka()">Reset</button>
+    <button class="btn" onclick="bacaAngka()">Baca</button>
+  </div>
+
+  <script>
+    let angkaTersusun = "";
+
+    function tambahAngka(angka) {
+      if (angkaTersusun.length < 3) {
+        angkaTersusun += angka;
+        updateDisplay();
+      }
+    }
+
+    function hapusAngka() {
+      angkaTersusun = angkaTersusun.slice(0, -1);
+      updateDisplay();
+    }
+
+    function resetAngka() {
+      angkaTersusun = "";
+      updateDisplay();
+    }
+
+    function updateDisplay() {
+      document.getElementById("display").innerText = angkaTersusun;
+    }
+
+    function bacaAngka() {
+      const angka = parseInt(angkaTersusun, 10);
+      if (isNaN(angka)) return;
+      const teks = ubahAngkaKeTeks(angka);
+      const ucap = new SpeechSynthesisUtterance(teks);
+      ucap.lang = "id-ID";
+      ucap.volume = 1;
+      window.speechSynthesis.speak(ucap);
+    }
+
+    function ubahAngkaKeTeks(n) {
+      const satuan = ["", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan"];
+      if (n === 0) return "nol";
+      if (n < 10) return satuan[n];
+      if (n === 10) return "sepuluh";
+      if (n === 11) return "sebelas";
+      if (n < 20) return satuan[n % 10] + " belas";
+      if (n < 100) {
+        let puluh = Math.floor(n / 10);
+        let sisa = n % 10;
+        return satuan[puluh] + " puluh" + (sisa ? " " + satuan[sisa] : "");
+      }
+      if (n === 100) return "seratus";
+      if (n < 200) return "seratus " + ubahAngkaKeTeks(n - 100);
+      if (n < 1000) {
+        let ratus = Math.floor(n / 100);
+        let sisa = n % 100;
+        return satuan[ratus] + " ratus" + (sisa ? " " + ubahAngkaKeTeks(sisa) : "");
+      }
+      return "terlalu besar";
+    }
+  </script>
+
+<!-- menu -->
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+
+      sidebar.classList.toggle("open");
+      overlay.classList.toggle("active");
+    }
+
+  </script>
+
+</body>
+</html>
