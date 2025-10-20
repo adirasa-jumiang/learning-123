@@ -129,36 +129,38 @@ h1 {
     .controls .btn.reset {
       background-color: #dc3545;
     }
-  /* css kartun animasi 
-  .cartoon-popup {
-  position: fixed;
-  width: 150px;
-  z-index: 1000;
-  cursor: move; /* Ubah kursor jadi "move" 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  overflow: hidden;
-  transition: transform 0.2s;
-}
-*/
+
 .cartoon-popup img {
   width: 100%;
   height: auto;
   display: block;
+  border-radius: 0 !important; /* Hilangkan rounded corner (jika ada) */
 }
 
 .cartoon-header {
-  background: #ff6b6b;
-  color: white;
-  padding: 5px 10px;
-  text-align: right;
+  background: transparent !important; /* Header transparan */
+  position: absolute; /* Biar close-btn bisa diposisikan */
+  top: 0;
+  right: 0;
+  padding: 0;
 }
 
 .close-btn {
   cursor: pointer;
-  font-size: 18px;
-} 
-
+  font-size: 16px;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -10px; /* 🔥 Geser ke atas (nilai minus) */
+  right: -10px; /* 🔥 Geser ke kanan (nilai minus) */
+  z-index: 1001;
+}
 /* Posisi Default */
 .bottom-right { bottom: 20px; right: 20px; }
 .bottom-left { bottom: 20px; left: 20px; }
@@ -172,7 +174,7 @@ h1 {
 
   <div class="sidebar" id="sidebar">
     <center><img src="https://adirasa-jumiang.github.io/rapor-ra/ADIRASA.png" height="80px" width="80px"></center><hr>
-    <br><h2>Menu</h2><hr>
+    <h2>Menu</h2><hr>
     <a href="index.html">Beranda</a>
     <a href="https://ra-adirasa.blogspot.com/">R.A. Adirasa</a>
     <a href="help.html">Cara Pakai</a>
@@ -281,6 +283,7 @@ h1 {
 
 </body>
 </html>
+
 
 
 
