@@ -129,6 +129,41 @@ h1 {
     .controls .btn.reset {
       background-color: #dc3545;
     }
+  /* css kartun animasi */
+  .cartoon-popup {
+  position: fixed;
+  width: 150px;
+  z-index: 1000;
+  cursor: move; /* Ubah kursor jadi "move" */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.cartoon-popup img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.cartoon-header {
+  background: #ff6b6b;
+  color: white;
+  padding: 5px 10px;
+  text-align: right;
+}
+
+.close-btn {
+  cursor: pointer;
+  font-size: 18px;
+} 
+
+/* Posisi Default */
+.bottom-right { bottom: 20px; right: 20px; }
+.bottom-left { bottom: 20px; left: 20px; }
+.top-right { top: 20px; right: 20px; }
+.top-left { top: 20px; left: 20px; }
   </style>
 </head>
 <body>
@@ -136,7 +171,8 @@ h1 {
   <div class="menu-btn" onclick="toggleSidebar()">☰</div>
 
   <div class="sidebar" id="sidebar">
-    <br><h2>Menu</h2>
+    <img src="https://adirasa-jumiang.github.io/rapor-ra/ADIRASA.png" height="80px" width="80px"><hr>
+    <br><h2>Menu</h2><hr>
     <a href="index.html">Beranda</a>
     <a href="https://ra-adirasa.blogspot.com/">R.A. Adirasa</a>
     <a href="help.html">Cara Pakai</a>
@@ -145,7 +181,7 @@ h1 {
 
   <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-  <h1>Pelafalan Angka (0–999)</h1>
+  <h1>Pelafalan Angka (0 s/d 999)</h1>
   <div id="display"></div>
 
   <div class="btn-container">
@@ -167,6 +203,13 @@ h1 {
     <button class="btn" onclick="bacaAngka()">Baca</button>
   </div>
 
+<!-- Popup Kartun GIF -->
+<div id="cartoon-popup" class="cartoon-popup bottom-right">
+  <div class="cartoon-header">
+    <span class="close-btn">&times;</span>
+  </div>
+  <img src="https://www.gambaranimasi.org/data/media/545/animasi-bergerak-anak-anak-0113.gif" alt="Karakter Kartun" draggable="false">
+</div>
   <script>
     let angkaTersusun = "";
 
@@ -238,3 +281,4 @@ h1 {
 
 </body>
 </html>
+
